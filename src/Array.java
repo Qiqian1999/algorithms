@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 public class Array {
     /*
@@ -29,13 +30,15 @@ public class Array {
     public int maxProfit(int[] prices) {
         int profit = 0;
         int buyPrice = prices[0];
-        for(int i = 0; i< prices.length; i++){
+        for(int i = 0; i < prices.length; i++){
             int sellPrice = prices[i];
             buyPrice = Math.min(buyPrice, sellPrice);
-            if(sellPrice-buyPrice>profit){
-                profit=sellPrice-buyPrice;
+            if( sellPrice - buyPrice > profit){
+                profit = sellPrice - buyPrice;
             }
         }
+
+
         return profit;
     }
 }
