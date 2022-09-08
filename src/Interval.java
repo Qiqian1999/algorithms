@@ -53,5 +53,27 @@ public class Interval {
         return ans.toArray(new int[0][]);
 
     }
+    /* 435. Non-overlapping Intervals
+    Given an array of  intervals where intervals[i] = [starti, endi],
+    return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+     */
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if(intervals.length <= 1){
+            return 0;
+        }
+        int ans = 0;
+        Arrays.sort(intervals,(int[] o1, int[] o2) -> o1[0] - o2[0]);
+        int end = intervals[0][1];
+        for(int i = 1; i< intervals.length; i++){
+            if(intervals[i][0] < end){
+                end = Math.min(intervals[i][1], end);
+                ans++;
+            } else{
+                end = intervals[i][1];
+            }
+        }
+        return ans;
+
+    }
 
 }
