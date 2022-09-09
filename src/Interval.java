@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Interval {
     /* 57. Insert Interval
@@ -51,7 +49,6 @@ public class Interval {
         }
         ans.add(new int[]{start, end});
         return ans.toArray(new int[0][]);
-
     }
     /* 435. Non-overlapping Intervals
     Given an array of  intervals where intervals[i] = [starti, endi],
@@ -73,7 +70,52 @@ public class Interval {
             }
         }
         return ans;
-
+    }
+    /* 252. Meeting Rooms
+    Given an array of meeting time intervals where intervals[i] = [starti, endi],
+    determine if a person could attend all meetings.
+     */
+    public boolean canAttendMeetings(int[][] intervals) {
+        if(intervals.length <= 0){
+            return true;
+        }
+        Arrays.sort(intervals, (int[] o1, int[] o2) -> o1[0]- o2[0]);
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+        for(int i = 1; i < intervals.length; i++){
+            if(intervals[i][0] < end){
+                return false;
+            }else{
+                start = intervals[i][0];
+                end = intervals[i][1];
+            }
+        }
+        return true;
+    }
+    /* 253. Meeting Rooms II
+    Given an array of meeting time intervals where intervals[i] = [starti, endi],
+    return the minimum number of conference rooms required.
+     */
+    public int minMeetingRooms(int[][] intervals) {
+        Arrays.sort(intervals, (int[] o1, int[] o2) -> o1[0]-o2[0]);
+        PriorityQueue<int[]> heap = new PriorityQueue<>(new Comparator<int[]>(){
+            public int compare(int[] o1,int[] o2){
+                return o1[1]-o2[1];
+            }
+        });
+        int ans = 1;
+        heap.add(intervals[0]);
+        for(int i =1; i< intervals.length; i++){
+            int earliestEnd = heap.peek()[1];
+            if(earliestEnd > intervals[i][0]){
+                heap.add(intervals[i]);
+                ans = Math.max(ans, heap.size());
+            }else{
+                heap.poll();
+                heap.add(intervals[i]);
+            }
+        }
+        return ans;
     }
 
 }
